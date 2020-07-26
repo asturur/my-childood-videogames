@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Andrea dosbox</title>
+  <link rel="stylesheet" type="text/css" href="style.css" />
+  <script src="scroll.js" type="text/javascript" ></script>
+</head>
+<body>
+  <div id="gallery" />
+  <script type="text/javascript">
+    var games = [
+      ['digger.zip', 'DIGGER.COM'],
+      ['alley_cat.zip', 'CAT.EXE'],
+      ['av.zip', 'AV.EXE'],
+    ];
+    var parent = document.getElementById('gallery');
+    games.forEach(function(game, index) {
+      var div = document.createElement('div');
+      var iframe = document.createElement('iframe');
+      div.className = 'game';
+      div.appendChild(iframe);
+      iframe.src='game.html?' + game[0] + '*' + game[1];
+      iframe.tabIndex = index;
+      parent.appendChild(div);
+    });
+    initScroll();
+  </script>
+  <!-- <script type="text/javascript" >
+    var iframe_window = window.frames["digger"];
+    iframe_window.focus();
+    iframe_window.document.body.focus();
+  </script> -->
+</body>
+</html>

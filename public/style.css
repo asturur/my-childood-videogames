@@ -1,0 +1,23 @@
+.game {
+  position: absolute;
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  transition: opacity linear 250ms;
+  opacity: 1;
+}
+.game.vanish {
+  opacity: 0;
+}
+.game iframe {
+  width: 960px;
+  height: 600px;
+  border: 1px solid white;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.gallery {
+  position: relative;
+}
