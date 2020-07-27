@@ -28,6 +28,7 @@
       cycles: 400,
     }).ready((fs, main) => {
       fs.extract("games/" + data[0]).then(() => {
+        console.log(data[1])
         main(["-c", data[1]]);
       });
     });
