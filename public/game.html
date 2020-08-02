@@ -24,14 +24,14 @@
       left: 0;
       width: 960px;
       height: 600px;
-      image-rendering: pixelated;
+      /* image-rendering: pixelated;
       image-rendering: -moz-crisp-edges;
-      image-rendering: crisp-edges;
+      image-rendering: crisp-edges; */
     }
   </style>
 </head>
 <body tabindex="0">
-  <img id="preview" src="" ></img>
+  <img id="preview" src="" crossorigin="anonymous" ></img>
   <canvas id="jsdos" width="320" height="200" tabindex="1"></canvas>
   <script type="text/javascript">
   emulators.pathPrefix = "/js/"
@@ -85,7 +85,7 @@
     var data = searchString.split('*');
     var img = document.getElementById('preview');
     window.gameName = data[0];
-    img.src = `/previews/${data[0]}.png`;
+    img.src = `previews/${data[0]}.png`;
     loadGame(`games/${data[0]}.zip`).then(bundle => {
       return runRequest.then(() => {
         window.gameStarted = true;

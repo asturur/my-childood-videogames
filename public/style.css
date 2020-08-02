@@ -1,3 +1,7 @@
+body {
+  overflow-y: hidden;
+}
+
 .game {
   position: absolute;
   display: inline-block;
