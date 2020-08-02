@@ -16,8 +16,10 @@
     .disappear {
       opacity: 0;
     }
-    canvas, img {
+    .appear {
       opacity: 1;
+    }
+    canvas, img {
       transition: opacity 1s linear;
       position: absolute;
       top: 0;
@@ -31,8 +33,8 @@
   </style>
 </head>
 <body tabindex="0">
-  <img id="preview" src="" />
   <canvas id="jsdos" width="320" height="200" tabindex="1"></canvas>
+  <img id="preview" src="" class="disappear" />
   <script type="text/javascript">
   emulators.pathPrefix = "/js/"
   window.gameStarted = false;
@@ -85,7 +87,12 @@
     var data = searchString.split('*');
     var img = document.getElementById('preview');
     window.gameName = data[0];
-    img.src = `previews/${data[0]}.png`;
+    img.onload = () => {
+      img.className = 'appear';
+    };
+    setTimeout(() => {
+      img.src = `previews/${data[0]}.png`;
+    }, 0);
     loadGame(`games/${data[0]}.zip`).then(bundle => {
       return runRequest.then(() => {
         window.gameStarted = true;
