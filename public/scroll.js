@@ -6,6 +6,30 @@
   var gameHeight = 600;
   var totalGames = 0;
 
+  function stopGame(game) {
+    var iframe = game.querySelector('iframe');
+    const w = iframe.contentWindow;
+    if (w.gameStarted) {
+      console.log('stopping', w.gameName);
+      w.reload();
+    }
+  }
+
+  function stopAllOtherGames() {
+    stopGame(currentGame);
+    gameStack.forEach(stopGame);
+  }
+
+  function addStartListener(game) {
+    game.addEventListener('click', () => {
+      stopAllOtherGames();
+      var iframe = game.querySelector('iframe');
+      console.log('starting', iframe.contentWindow.gameName);
+      iframe.contentWindow.gameStart();
+      iframe.focus();
+    })
+  }
+
   function orderGame(game, i) {
     game.style.top = -(totalGames - i) * gameOffset + 'px';
     game.style.left = -(totalGames - i) * gameOffset + 'px';
@@ -41,6 +65,7 @@
     for (var i = 0; i < totalGames; i++) {
       var game = games[i];
       gameStack.push(game);
+      addStartListener(game)
       orderGame(game, i);
     }
     gallery.addEventListener('wheel', wheelhandler);
