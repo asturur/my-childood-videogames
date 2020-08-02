@@ -6,6 +6,15 @@
   transition: opacity linear 250ms;
   opacity: 1;
 }
+
+.eventCatcher {
+  position: relative;
+  display: inline-block;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .game.vanish {
   opacity: 0;
 }
@@ -13,12 +22,8 @@
   width: 960px;
   height: 600px;
   border: 1px solid white;
-  position: relative;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
   overflow-y: hidden;
+  pointer-events: none;
 }
 .gallery {
   position: relative;

@@ -89,7 +89,7 @@
     loadGame(`games/${data[0]}.zip`).then(bundle => {
       return runRequest.then(() => {
         window.gameStarted = true;
-        img.classname = 'disappear';
+        img.className = 'disappear';
         runBundle(bundle);
       })
     });

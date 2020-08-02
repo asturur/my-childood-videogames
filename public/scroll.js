@@ -7,7 +7,7 @@
   var totalGames = 0;
 
   function stopGame(game) {
-    var iframe = game.querySelector('iframe');
+    const iframe = game.querySelector('iframe');
     const w = iframe.contentWindow;
     if (w.gameStarted) {
       console.log('stopping', w.gameName);
@@ -22,12 +22,19 @@
   }
 
   function addStartListener(game) {
-    game.addEventListener('click', () => {
-      stopAllOtherGames();
-      var iframe = game.querySelector('iframe');
-      console.log('starting', iframe.contentWindow.gameName);
-      iframe.contentWindow.gameStart();
-      iframe.focus();
+    const iframe = game.querySelector('iframe');
+    const otherDiv = game.querySelector('.eventCatcher');
+    otherDiv.addEventListener('click', () => {
+      const w = iframe.contentWindow;
+      if (w.gameStarted) {
+        // do nothing, ideally pause/resume
+        iframe.focus();
+      } else {
+        stopAllOtherGames();
+        console.log('starting', w.gameName);
+        w.gameStart();
+        iframe.focus();
+      }
     })
   }
 
@@ -58,6 +65,26 @@
     }
   }
 
+  function pageUp() {
+
+  }
+
+  function pageDown() {
+
+  }
+
+  function scrollGames(e) {
+    const code = e.keycode;
+    if (code !== 33 && code !== 34) {
+      return;
+    }
+    if (keycode === 33) {
+      pageUp();
+    } else {
+      pageDown();
+    }
+  }
+
   function init() {
     var gallery = document.querySelector('#gallery');
 
@@ -70,6 +97,7 @@
       orderGame(game, i);
     }
     gallery.addEventListener('wheel', wheelhandler);
+    window.addEventListener('keyup', scrollGames)
     currentGame = gameStack.pop();
     currentGame.style.zIndex = 1000;
   }

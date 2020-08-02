@@ -22,6 +22,8 @@
       ['asteroids', 'Dodge.COM'], // correct. with current key combo unplayable
       ['big_top', 'BIGTOP.EXE'],
       ['burgertime', 'burger.exe'],
+      ['barbarian', 'barb.exe'],
+      ['decathlon', 'decathln.exe'],
       // ['contra', '__contr.com'], // cannot go past crack screen
       // ['burger__alt.zip', 'burger.exe'], // alternate version.
       ['frogerjr', 'frogerjr.exe'], // reduce speed
@@ -29,9 +31,12 @@
     var parent = document.getElementById('gallery');
     games.forEach(function(game, index) {
       var div = document.createElement('div');
+      var div2 = document.createElement('div');
       var iframe = document.createElement('iframe');
       div.className = 'game';
-      div.appendChild(iframe);
+      div2.className = 'eventCatcher';
+      div2.appendChild(iframe);
+      div.appendChild(div2);
       iframe.src='game.html?' + game[0];
       iframe.tabIndex = index;
       parent.appendChild(div);
