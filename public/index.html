@@ -18,13 +18,13 @@
       ['arkanoid', 'Arkanoid.com'], // not the exact version, need zx spectrum port // with v7 does not work the keyboard
       ['aaow-cga', 'WAR.EXE'],
       ['missile', 'ABM.EXE'],
-      // ['artillery.zip', 'ARTILL.BAT'], // not exactly the one i remember, my dad probably modified it
-      // ['asteroids.zip', 'Dodge.COM'], // correct. with current key combo unplayable
-      // ['big_top.zip', 'BIGTOP.EXE'],
-      // ['burgertime.zip', 'burger.exe'],
-      // ['contra.zip', '__contr.com'], // cannot go past crack screen
+      ['artillery', 'ARTILL.BAT'], // not exactly the one i remember, my dad probably modified it
+      ['asteroids', 'Dodge.COM'], // correct. with current key combo unplayable
+      ['big_top', 'BIGTOP.EXE'],
+      ['burgertime', 'burger.exe'],
+      // ['contra', '__contr.com'], // cannot go past crack screen
       // ['burger__alt.zip', 'burger.exe'], // alternate version.
-      // ['frogerjr.zip', 'frogerjr.exe'], // reduce speed
+      ['frogerjr', 'frogerjr.exe'], // reduce speed
     ];
     var parent = document.getElementById('gallery');
     games.forEach(function(game, index) {
@@ -32,7 +32,7 @@
       var iframe = document.createElement('iframe');
       div.className = 'game';
       div.appendChild(iframe);
-      iframe.src='game.html?' + game[0] + '*' + game[1];
+      iframe.src='game.html?' + game[0];
       iframe.tabIndex = index;
       parent.appendChild(div);
     });

@@ -11,7 +11,8 @@
     const w = iframe.contentWindow;
     if (w.gameStarted) {
       console.log('stopping', w.gameName);
-      w.reload();
+      w.stopGame();
+      iframe.src = iframe.src;
     }
   }
 

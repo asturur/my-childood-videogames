@@ -13,7 +13,12 @@
       height: 600px;
       overflow: hidden;
     }
+    .disappear {
+      opacity: 0;
+    }
     canvas, img {
+      opacity: 1;
+      transition: opacity 1s linear;
       position: absolute;
       top: 0;
       left: 0;
@@ -36,22 +41,27 @@
     window.gameStart = resolve;
   })
 
-  window.reload = function() {
+  window.stopGame = function() {
     stop();
-    document.location.href = document.location.href;
   }
 
   function runBundle(bundle) {
     const ctx = document.getElementById('jsdos').getContext('2d');
+    let lastWidth = ctx.canvas.width;
+    let lastHeight = ctx.canvas.height;
     const ciPromise = emulators.dosWorker(bundle);
     return ciPromise.then((ci) => {
       emulatorsUi.sound.audioNode(ci);
       ci.events().onFrame((rgba) => {
-        rgba = new Uint8ClampedArray(rgba.buffer);
-        for (let next = 3; next < rgba.byteLength; next = next + 4) {
-            rgba[next] = 255;
+        if (ci.frameWidth !== lastWidth || ci.frameHeight !== lastHeight) {
+          ctx.canvas.width = lastWidth = ci.frameWidth;
+          ctx.canvas.height = lastHeight = ci.frameHeight;
         }
-        ctx.putImageData(new ImageData(rgba, 320, 200), 0, 0);
+        rgbaBuff = new Uint8ClampedArray(rgba.buffer);
+        for (let next = 3; next < rgbaBuff.byteLength; next = next + 4) {
+            rgbaBuff[next] = 255;
+        }
+        ctx.putImageData(new ImageData(rgbaBuff, ci.frameWidth, ci.frameHeight), 0, 0);
       });
       window.addEventListener("keydown", (e) => {
           const keyCode = emulatorsUi.controls.domToKeyCode(e.keyCode);
@@ -79,7 +89,7 @@
     loadGame(`games/${data[0]}.zip`).then(bundle => {
       return runRequest.then(() => {
         window.gameStarted = true;
-        document.body.removeChild(img);
+        img.classname = 'disappear';
         runBundle(bundle);
       })
     });
