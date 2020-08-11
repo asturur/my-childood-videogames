@@ -27,6 +27,8 @@
     // ['burger__alt.zip', 'burger.exe'], // alternate version.
     ['frogerjr', 'frogerjr.exe'], // reduce speed
     ['gp', 'gpcga.exe'],
+    ['zaxxon', 'zaxxon.com'],
+    ['winter', 'winter.com']
   ];
 
   gamesData = {
