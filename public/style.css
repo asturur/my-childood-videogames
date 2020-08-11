@@ -1,4 +1,6 @@
 body {
+  margin: 0;
+  padding: 0;
   overflow-y: hidden;
 }
 
@@ -31,4 +33,22 @@ body {
 }
 .gallery {
   position: relative;
+}
+
+.disappear {
+  opacity: 0;
+}
+.appear {
+  opacity: 1;
+}
+canvas, img {
+  transition: opacity 1s linear;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 960px;
+  height: 600px;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
 }
