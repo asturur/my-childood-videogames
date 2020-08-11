@@ -28,7 +28,8 @@
     ['frogerjr', 'frogerjr.exe'], // reduce speed
     ['gp', 'gpcga.exe'],
     ['zaxxon', 'zaxxon.com'],
-    ['winter', 'winter.com']
+    ['winter', 'winter.com'],
+    ['tetris', 'ctetris.com']
   ];
 
   gamesData = {
