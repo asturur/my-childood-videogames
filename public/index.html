@@ -6,58 +6,15 @@
   <title>Andrea dosbox</title>
   <link rel="stylesheet" type="text/css" href="style.css" />
   <script src="scroll.js" type="text/javascript" ></script>
+  <script src="setupgrid.js" type="text/javascript" ></script>
+  <script src="/js/emulators.js" type="text/javascript" ></script>
+  <script src="/js/emulators-ui.js" type="text/javascript" ></script>
 </head>
 <body>
-  <div id="gallery" />
+  <div id="gallery" ></div>
   <script type="text/javascript">
-    var games = [
-      ['digger', 'DIGGER.COM'],
-      ['alley_cat', 'CAT.EXE'],
-      ['av', 'AV.EXE'],
-      ['centipede', 'Ctp.EXE'],
-      ['arkanoid', 'Arkanoid.com'], // not the exact version, need zx spectrum port // with v7 does not work the keyboard
-      ['aaow-cga', 'WAR.EXE'],
-      ['missile', 'ABM.EXE'],
-      ['artillery', 'ARTILL.BAT'], // not exactly the one i remember, my dad probably modified it
-      ['asteroids', 'Dodge.COM'], // correct. with current key combo unplayable
-      ['big_top', 'BIGTOP.EXE'],
-      ['burgertime', 'burger.exe'],
-      ['barbarian', 'barb.exe'],
-      ['decathlon', 'decathln.exe'],
-      ['rogue', 'rogue.exe'],
-      ['congo', 'boot congo.img'],
-      ['blockout', 'bl.exe'],
-      ['bowling', 'bowling.exe'],
-      ['paratrooper', 'ptrooper.com'],
-      ['jbird', 'jbird.exe'],
-      ['styx', 'styx.exe'],
-      ['soccer', 'soccer.com'], // nag screen but working
-      // ['tapper', 'tapper.com'], does not start
-      // ['buckroger', 'zoom.com'], does not start
-      // ['contra', 'bsp __contr.com'], // cannot go past crack screen
-      // ['burger__alt.zip', 'burger.exe'], // alternate version.
-      ['frogerjr', 'frogerjr.exe'], // reduce speed
-      ['gp', 'gpcga.exe'],
-    ];
-    var parent = document.getElementById('gallery');
-    games.forEach(function(game, index) {
-      var div = document.createElement('div');
-      var div2 = document.createElement('div');
-      var iframe = document.createElement('iframe');
-      div.className = 'game';
-      div2.className = 'eventCatcher';
-      div2.appendChild(iframe);
-      div.appendChild(div2);
-      iframe.src='game.html?' + game[0];
-      iframe.tabIndex = index;
-      parent.appendChild(div);
-    });
+    setupgrid(document.getElementById('gallery'));
     initScroll();
   </script>
-  <!-- <script type="text/javascript" >
-    var iframe_window = window.frames["digger"];
-    iframe_window.focus();
-    iframe_window.document.body.focus();
-  </script> -->
 </body>
 </html>
