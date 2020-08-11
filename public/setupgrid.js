@@ -24,12 +24,15 @@
     // ['tapper', 'tapper.com'], does not start
     // ['buckroger', 'zoom.com'], does not start
     // ['contra', 'bsp __contr.com'], // cannot go past crack screen
-    // ['burger__alt.zip', 'burger.exe'], // alternate version.
-    ['frogerjr', 'frogerjr.exe'], // reduce speed
+    ['frogerjr', 'frogerjr.exe'], // reduce speed, keys lag
     ['gp', 'gpcga.exe'],
     ['zaxxon', 'zaxxon.com'],
     ['winter', 'winter.com'],
-    ['tetris', 'ctetris.com']
+    ['tetris', 'ctetris.com'],
+    ['lander', 'lander.exe'], // too fast try to slow down
+    ['moonpatrol', 'patrol.com'],
+    ['karateka', 'karateka.exe'],
+    ['tennis', 'tennis.exe'],
   ];
 
   gamesData = {
