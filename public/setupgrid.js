@@ -35,6 +35,7 @@
 
   let currentKeydownListener;
   let currentKeyupListener;
+  let currentCi;
 
   function loadGame(bundlePath) {
     return emulatorsUi.network.resolveBundle(bundlePath);
@@ -45,10 +46,9 @@
     const ctx = gameData.canvas.getContext('2d');
     let lastWidth = ctx.canvas.width;
     let lastHeight = ctx.canvas.height;
-    console.log(emulators)
     const ciPromise = emulators.dosWorker(bundle);
     return ciPromise.then((ci) => {
-      console.log(ci);
+      currentCi = ci;
       emulatorsUi.sound.audioNode(ci);
       ci.events().onFrame((rgba) => {
         if (ci.frameWidth !== lastWidth || ci.frameHeight !== lastHeight) {
@@ -100,7 +100,7 @@
       canvas.width = 320;
       canvas.height = 200;
       canvas.tabIndex = index;
-      div.className = 'game eventCatcher';
+      div.className = 'game';
       div.id = gameName;
       div.appendChild(canvas);
       div.appendChild(preview);
@@ -123,14 +123,17 @@
     const gameData = gamesData[gameName];
      if (gameData.gameStarted) {
        console.log('stopping', gameName);
-       stop();
-       window.removeEventListener("keydown", currentKeydownListener);
-       window.removeEventListener("keyup", currentKeyupListener);
        gameData.gameStarted = false;
      }
   }
 
   function stopAllOtherGames() {
+    window.removeEventListener("keydown", currentKeydownListener);
+    window.removeEventListener("keyup", currentKeyupListener);
+    if (currentCi) {
+      currentCi.exit();
+      currentCi = null;
+    }
     games.forEach(function(game) {
       stopGame(game[0]);
     });

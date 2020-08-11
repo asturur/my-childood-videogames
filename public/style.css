@@ -7,32 +7,22 @@ body {
 .game {
   position: absolute;
   display: inline-block;
-  width: 100%;
-  height: 100%;
   transition: opacity linear 250ms;
-  opacity: 1;
-}
-
-.eventCatcher {
-  position: relative;
-  display: inline-block;
-  top: 50%;
-  left: 50%;
   transform: translate(-50%, -50%);
+  opacity: 1;
+  width: 960px;
+  height: 600px;
+  border: 1px solid white;
 }
 
 .game.vanish {
   opacity: 0;
 }
-.game iframe {
-  width: 960px;
-  height: 600px;
-  border: 1px solid white;
-  overflow-y: hidden;
-  pointer-events: none;
-}
-.gallery {
-  position: relative;
+
+#gallery {
+  position: absolute;
+  top: 50%;
+  left: 50%;
 }
 
 .disappear {
@@ -44,8 +34,6 @@ body {
 canvas, img {
   transition: opacity 1s linear;
   position: absolute;
-  top: 0;
-  left: 0;
   width: 960px;
   height: 600px;
   image-rendering: pixelated;
