@@ -35,6 +35,7 @@
     ['tennis', 'tennis.exe'],
     ['princeofpersia'] // does not start
     ['boxing', 'boxing.com']
+    ['pitstop2', 'pitstop2.exe']
   ];
 
   gamesData = {
