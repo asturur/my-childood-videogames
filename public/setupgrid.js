@@ -18,7 +18,7 @@
     ['blockout', 'bl.exe'],
     ['bowling', 'bowling.exe'],
     ['paratrooper', 'ptrooper.com'],
-    ['jbird', 'jbird.exe'],
+    ['jbird', 'jbird.exe'], // richiede sistemare i tasti
     ['styx', 'styx.exe'],
     ['soccer', 'soccer.com'], // nag screen but working
     // ['tapper', 'tapper.com'], does not start
@@ -36,6 +36,7 @@
     // ['princeofpersia'] // does not start
     ['boxing', 'boxing.com'],
     ['pitstop2', 'pitstop2.exe'],
+    ['macadam', 'macadam.exe'],
   ];
 
   gamesData = {
