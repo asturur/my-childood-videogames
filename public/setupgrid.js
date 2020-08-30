@@ -37,6 +37,11 @@
     ['boxing', 'boxing.com'],
     ['pitstop2', 'pitstop2.exe'],
     ['macadam', 'macadam.exe'],
+    ['pango', 'pango.exe'],
+    ['pool', 'pool.exe'],
+    ['sokoban', 'sokoban.exe'],
+    // ['msfs', 'boot ms100.ima'], hangs after mode selection
+    ['novatron', 'novatron.exe'],
   ];
 
   gamesData = {
