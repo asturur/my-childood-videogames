@@ -5,21 +5,20 @@
   var gameOffset = 5;
   var gameHeight = 600;
   var totalGames = 0;
+  var gamesSelector = '[query="gameContainer"]';
 
   function orderGame(game, i) {
-    game.style.top = -(totalGames - i) * gameOffset + 'px';
-    game.style.left = -(totalGames - i) * gameOffset + 'px';
+    game.style.top = -(totalGames - 1 - i) * gameOffset + 'px';
+    game.style.left = -(totalGames - 1 - i) * gameOffset + 'px';
     game.style.zIndex = i;
   }
 
   function wheelhandler(e) {
     e.preventDefault();
-    currentGame.style.top = (parseInt(currentGame.style.top) + e.deltaY) + 'px';
-    var currentY = parseInt(currentGame.style.top);
-    if (
-      (currentY < -gameHeight + totalGames * gameOffset - 20) ||
-      (currentY > gameHeight + 20)
-    ) {
+    var delta = e.deltaY;
+    var nextTop = parseInt(currentGame.style.top) + delta;
+    if (nextTop > gameHeight + 20) {
+      // cycle down
       var thisGame = currentGame;
       thisGame.className += ' vanish';
       gameStack.unshift(thisGame);
@@ -29,7 +28,17 @@
       setTimeout(function() {
         // resetClassName;
         thisGame.className = 'gameStack';
-      });
+      }, 300);
+    } else if (nextTop >= 0) {
+      currentGame.style.top = (nextTop) + 'px';
+    } else if (nextTop < 0) {
+      currentGame.style.top = '0px';
+      gameStack.push(currentGame);
+      currentGame = gameStack.shift();
+      gameStack.forEach(orderGame);
+      currentGame.style.top = (gameHeight + 20) + 'px';
+      currentGame.style.left = '0px';
+      currentGame.style.zIndex = 1000;
     }
   }
 
@@ -53,21 +62,28 @@
     }
   }
 
-  function initGrid() {
-    var gallery = document.querySelector('#gallery');
+  function removeAllHandlers() {
     gallery.removeEventListener('wheel', wheelhandler);
-    var games = gallery.querySelectorAll('.game');
-    var games = gallery.querySelectorAll('.game');
-    totalGames = games.length;
+    window.removeEventListener('wheel', scrollGames);
+  }
+
+  function initGrid() {
+    removeAllHandlers();
+    var gallery = document.querySelector('#gallery');
+    gallery.className = 'grid';
+    var games = gallery.querySelectorAll(gamesSelector);
     for (var i = 0; i < totalGames; i++) {
       var game = games[i];
+      game.className = 'gameGrid';
     }
   }
 
   function initStack() {
+    removeAllHandlers();
+    document.body.className = 'noScroll';
     var gallery = document.querySelector('#gallery');
     gallery.className = 'stack';
-    var games = gallery.querySelectorAll('[query="gameContainer"]');
+    var games = gallery.querySelectorAll(gamesSelector);
     totalGames = games.length;
     for (var i = 0; i < totalGames; i++) {
       var game = games[i];

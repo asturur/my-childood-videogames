@@ -1,13 +1,16 @@
 body {
   margin: 0;
   padding: 0;
+}
+
+.noScroll {
   overflow-y: hidden;
 }
 
 .gameStack {
   position: absolute;
   display: inline-block;
-  transition: opacity linear 250ms, transform linear 250ms;
+  transition: opacity linear 300ms;
   transform: translate(-50%, -50%);
   opacity: 1;
   width: 960px;
@@ -20,7 +23,7 @@ body {
 }
 
 .vanish {
-  opacity: 0;
+  transition: opacity linear 300ms, top linear 300ms, left linear 300ms;
 }
 
 .grid {
