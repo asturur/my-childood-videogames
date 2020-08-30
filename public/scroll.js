@@ -27,8 +27,8 @@
       currentGame = gameStack.pop();
       currentGame.style.zIndex = 1000;
       setTimeout(function() {
-        // resetClasName;
-        thisGame.className = 'game';
+        // resetClassName;
+        thisGame.className = 'gameStack';
       });
     }
   }
@@ -53,13 +53,25 @@
     }
   }
 
-  function init() {
+  function initGrid() {
     var gallery = document.querySelector('#gallery');
-
+    gallery.removeEventListener('wheel', wheelhandler);
+    var games = gallery.querySelectorAll('.game');
     var games = gallery.querySelectorAll('.game');
     totalGames = games.length;
     for (var i = 0; i < totalGames; i++) {
       var game = games[i];
+    }
+  }
+
+  function initStack() {
+    var gallery = document.querySelector('#gallery');
+    gallery.className = 'stack';
+    var games = gallery.querySelectorAll('[query="gameContainer"]');
+    totalGames = games.length;
+    for (var i = 0; i < totalGames; i++) {
+      var game = games[i];
+      game.className = 'gameStack';
       gameStack.push(game);
       orderGame(game, i);
     }
@@ -69,5 +81,5 @@
     currentGame.style.zIndex = 1000;
   }
 
-  window.initScroll = init;
+  window.initStack = initStack;
 })()
