@@ -76,3 +76,9 @@ canvas, img {
 .gameGrid img {
   left: -100%;
 }
+
+#controls {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}

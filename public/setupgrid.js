@@ -58,7 +58,10 @@
     let lastHeight = ctx.canvas.height;
     const ciPromise = emulators.dosWorker(bundle);
     return ciPromise.then((ci) => {
-      gameData.canvas.requestFullscreen();
+      var fullscreen = document.getElementById('fullscreen');
+      if (fullscreen && fullscreen.checked) {
+        gameData.canvas.requestFullscreen();
+      }
       currentCi = ci;
       emulatorsUi.sound.audioNode(ci);
       ci.events().onFrame((rgba) => {
@@ -93,16 +96,25 @@
     });
   }
 
-  function startPreloading(gameName) {
+  function startOnClick(gameName) {
     const data = gamesData[gameName];
-    loadGame(`games/${gameName}.zip`).then(bundle => {
+    data.startRequest = new Promise((resolve) => {
+      data.gameStart = resolve;
+    });
+    return function(bundle) {
       return data.startRequest.then(() => {
         emulators.pathPrefix = "/js/";
         data.gameStarted = true;
         data.preview.className = 'disappear';
         runBundle(bundle, gameName);
       });
-    });
+    }
+  }
+
+  function startPreloading(gameName) {
+    const data = gamesData[gameName];
+    data.loadPromise = loadGame(`games/${gameName}.zip`);
+    return data.loadPromise.then(startOnClick(gameName));
   }
 
   function buildgames(parent) {
@@ -129,12 +141,9 @@
         preview: preview,
         gameStarted: false
       };
-      data.startRequest = new Promise((resolve) => {
-        data.gameStart = resolve;
-      });
       gamesData[gameName] = data;
       startPreloading(gameName);
-      addStartListener(div);
+      addListeners(div);
     });
   }
 
@@ -143,6 +152,7 @@
      if (gameData.gameStarted) {
        console.log('stopping', gameName);
        gameData.gameStarted = false;
+       gameData.loadPromise.then(startOnClick(gameName));
      }
   }
 
@@ -158,21 +168,35 @@
     });
   }
 
-  function addStartListener(gameDiv) {
-     const gameName = gameDiv.id;
-     const gameData = gamesData[gameName];
-     const gameCanvas = gameData.canvas;
-     gameDiv.addEventListener('click', () => {
-       if (gameData.gameStarted) {
-         // do nothing, ideally pause/resume
-         gameCanvas.focus();
-       } else {
-         stopAllOtherGames();
-         console.log('starting', gameName);
-         gameData.gameStart(gameName);
-         gameCanvas.focus();
-       }
-     })
+  function startListener(evt) {
+    const gameDiv = evt.target.parentNode;
+    const gameName = gameDiv.id;
+    const gameData = gamesData[gameName];
+    const gameCanvas = gameData.canvas;
+    if (gameData.gameStarted) {
+      // do nothing, ideally pause/resume
+      gameCanvas.focus();
+    } else {
+      stopAllOtherGames();
+      console.log('starting', gameName);
+      gameData.gameStart(gameName);
+      gameCanvas.focus();
+    }
+  }
+
+  function fullscreenListener(evt) {
+    const gameDiv = evt.target.parentNode;
+    const gameName = gameDiv.id;
+    const gameData = gamesData[gameName];
+    const gameCanvas = gameData.canvas;
+    if (gameData.gameStarted) {
+      gameCanvas.requestFullscreen();
+    }
+  }
+
+  function addListeners(gameDiv) {
+     gameDiv.addEventListener('click', startListener)
+     gameDiv.addEventListener('dblclick', fullscreenListener)
    }
   window.gamesData = gamesData;
   window.buildgames = buildgames;
