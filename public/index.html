@@ -11,10 +11,13 @@
   <script src="/js/emulators-ui.js" type="text/javascript" ></script>
 </head>
 <body>
+  <div >
+    <button onclick="switchView()">switch view</button>
+  </div>
   <div id="gallery" ></div>
   <script type="text/javascript">
     buildgames(document.getElementById('gallery'));
-    initStack();
+    initGrid();
   </script>
 </body>
 </html>

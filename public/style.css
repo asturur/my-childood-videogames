@@ -19,7 +19,18 @@ body {
 }
 
 .gameGrid {
+  margin: 12px;
+  position: relative;
+  display: inline-flex;
+  opacity: 1;
+  width: 320px;
+  height: 200px;
+  border: 2px solid white;
+  cursor: pointer;
+}
 
+.gameGrid:hover {
+  border: 2px solid cyan;
 }
 
 .vanish {
@@ -27,11 +38,15 @@ body {
 }
 
 .grid {
-
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
 }
 
 .stack {
   position: absolute;
+  margin-top: 20px;
   top: 50%;
   left: 50%;
 }
@@ -39,15 +54,25 @@ body {
 .disappear {
   opacity: 0;
 }
+
 .appear {
   opacity: 1;
 }
+
 canvas, img {
   transition: opacity 1s linear;
-  position: absolute;
-  width: 960px;
-  height: 600px;
+  position: relative;
   image-rendering: pixelated;
   image-rendering: -moz-crisp-edges;
   image-rendering: crisp-edges;
+  width: 100%;
+  height: 100%;
+}
+
+.gameStack img {
+  top: -100%;
+}
+
+.gameGrid img {
+  left: -100%;
 }

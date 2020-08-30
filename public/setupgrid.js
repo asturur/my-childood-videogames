@@ -67,21 +67,28 @@
         }
         rgbaBuff = new Uint32Array(rgba.buffer);
         rgbaBuff8 = new Uint8ClampedArray(rgba.buffer);
-        for (let next = 0; next < rgbaBuff.length; next++) {
-            rgbaBuff[next] += 4278190080; // 255 << 24
+        // for (let next = 0; next < rgbaBuff.length; next++) {
+        //     rgbaBuff[next] |= 4278190080; // 255 << 24
+        // }
+        for (let next = 3; next < rgbaBuff8.length; next += 4) {
+            rgbaBuff8[next] = 255; // 255 << 24
         }
         ctx.putImageData(new ImageData(rgbaBuff8, ci.frameWidth, ci.frameHeight), 0, 0);
       });
       currentKeydownListener = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
         const keyCode = emulatorsUi.controls.domToKeyCode(e.keyCode);
         ci.sendKeyEvent(keyCode, true);
       }
       currentKeyupListener = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
         const keyCode = emulatorsUi.controls.domToKeyCode(e.keyCode);
         ci.sendKeyEvent(keyCode, false);
       }
-      window.addEventListener("keydown", currentKeydownListener);
-      window.addEventListener("keyup", currentKeyupListener);
+      window.addEventListener("keydown", currentKeydownListener, { capture: false });
+      window.addEventListener("keyup", currentKeyupListener,  { capture: false });
     });
   }
 

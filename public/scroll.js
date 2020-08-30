@@ -62,26 +62,39 @@
     }
   }
 
-  function removeAllHandlers() {
+  function resetView() {
+    var gallery = getContainer();
     gallery.removeEventListener('wheel', wheelhandler);
     window.removeEventListener('wheel', scrollGames);
+    var games = gallery.querySelectorAll(gamesSelector);
+    for (var i = 0; i < totalGames; i++) {
+      games[i].style = {
+        left: undefined,
+        top: undefined,
+        zIndex: undefined,
+      };
+    }
+  }
+
+  function getContainer() {
+    return document.querySelector('#gallery');
   }
 
   function initGrid() {
-    removeAllHandlers();
-    var gallery = document.querySelector('#gallery');
+    resetView();
+    var gallery = getContainer();
     gallery.className = 'grid';
     var games = gallery.querySelectorAll(gamesSelector);
+    totalGames = games.length;
     for (var i = 0; i < totalGames; i++) {
-      var game = games[i];
-      game.className = 'gameGrid';
+      games[i].className = 'gameGrid';
     }
   }
 
   function initStack() {
-    removeAllHandlers();
+    resetView();
     document.body.className = 'noScroll';
-    var gallery = document.querySelector('#gallery');
+    var gallery = getContainer();
     gallery.className = 'stack';
     var games = gallery.querySelectorAll(gamesSelector);
     totalGames = games.length;
@@ -97,5 +110,16 @@
     currentGame.style.zIndex = 1000;
   }
 
+  function switchView() {
+    var gallery = getContainer();
+    if (gallery.className === 'stack') {
+      initGrid();
+    } else {
+      initStack();
+    }
+  }
+
   window.initStack = initStack;
+  window.initGrid = initGrid;
+  window.switchView = switchView;
 })()
