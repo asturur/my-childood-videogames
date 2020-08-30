@@ -58,6 +58,7 @@
     let lastHeight = ctx.canvas.height;
     const ciPromise = emulators.dosWorker(bundle);
     return ciPromise.then((ci) => {
+      gameData.canvas.requestFullscreen();
       currentCi = ci;
       emulatorsUi.sound.audioNode(ci);
       ci.events().onFrame((rgba) => {
