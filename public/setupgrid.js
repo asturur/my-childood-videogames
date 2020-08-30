@@ -180,7 +180,6 @@
       stopAllOtherGames();
       console.log('starting', gameName);
       gameData.gameStart(gameName);
-      gameCanvas.focus();
     }
   }
 
