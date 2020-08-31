@@ -21,9 +21,9 @@
     ['jbird', 'jbird.exe'], // richiede sistemare i tasti
     ['styx', 'styx.exe'],
     ['soccer', 'soccer.com'], // nag screen but working
-    // ['tapper', 'tapper.com'], does not start
-    // ['buckroger', 'zoom.com'], does not start
-    // ['contra', 'bsp __contr.com'], // cannot go past crack screen
+    ['tapper', 'tapper.com'],
+    ['buckroger', 'boot buckzoom.img'],
+    ['contra', 'contrafx.com'],
     ['frogerjr', 'frogerjr.exe'], // reduce speed, keys lag
     ['gp', 'gpcga.exe'],
     ['zaxxon', 'zaxxon.com'],
@@ -33,7 +33,7 @@
     ['moonpatrol', 'patrol.com'],
     ['karateka', 'karateka.exe'],
     ['tennis', 'tennis.exe'],
-    // ['princeofpersia'] // does not start
+    ['prince', 'prince.exe'], // does not start
     ['boxing', 'boxing.com'],
     ['pitstop2', 'pitstop2.exe'],
     ['macadam', 'macadam.exe'],

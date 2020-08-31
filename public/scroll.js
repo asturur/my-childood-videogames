@@ -66,6 +66,7 @@
     var gallery = getContainer();
     gallery.removeEventListener('wheel', wheelhandler);
     window.removeEventListener('wheel', scrollGames);
+    document.body.className = '';
     var games = gallery.querySelectorAll(gamesSelector);
     for (var i = 0; i < totalGames; i++) {
       games[i].style = {
