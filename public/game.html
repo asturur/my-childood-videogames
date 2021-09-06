@@ -51,19 +51,20 @@
     const ctx = document.getElementById('jsdos').getContext('2d');
     let lastWidth = ctx.canvas.width;
     let lastHeight = ctx.canvas.height;
-    const ciPromise = emulators.dosWorker(bundle);
+    const ciPromise = emulators.dosboxWorker(bundle);
     return ciPromise.then((ci) => {
       emulatorsUi.sound.audioNode(ci);
+      ci.events().onFrameSize((width, height) => {
+        console.log('FRAME SIZE', width, height)
+        ctx.canvas.width = lastWidth = width;
+        ctx.canvas.height = lastHeight = height;
+      });
       ci.events().onFrame((rgba) => {
-        if (ci.frameWidth !== lastWidth || ci.frameHeight !== lastHeight) {
-          ctx.canvas.width = lastWidth = ci.frameWidth;
-          ctx.canvas.height = lastHeight = ci.frameHeight;
-        }
         rgbaBuff = new Uint8ClampedArray(rgba.buffer);
         for (let next = 3; next < rgbaBuff.byteLength; next = next + 4) {
             rgbaBuff[next] = 255;
         }
-        ctx.putImageData(new ImageData(rgbaBuff, ci.frameWidth, ci.frameHeight), 0, 0);
+        ctx.putImageData(new ImageData(rgbaBuff, lastWidth, lastHeight), 0, 0);
       });
       window.addEventListener("keydown", (e) => {
           const keyCode = emulatorsUi.controls.domToKeyCode(e.keyCode);

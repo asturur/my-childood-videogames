@@ -42,6 +42,8 @@
     ['sokoban', 'sokoban.exe'],
     // ['msfs', 'boot ms100.ima'], hangs after mode selection
     ['novatron', 'novatron.exe'],
+    ['gapper', 'gapper.exe'],
+    ['gato', 'gato.exe'],
   ];
 
   gamesData = {
@@ -59,30 +61,35 @@
   function runBundle(bundle, gameName) {
     const gameData = gamesData[gameName];
     const ctx = gameData.canvas.getContext('2d');
-    let lastWidth = ctx.canvas.width;
-    let lastHeight = ctx.canvas.height;
-    const ciPromise = emulators.dosWorker(bundle);
+    let rgba = new Uint8ClampedArray(0);
+    const ciPromise = emulators.dosboxWorker(bundle);
     return ciPromise.then((ci) => {
       var fullscreen = document.getElementById('fullscreen');
       if (fullscreen && fullscreen.checked) {
         gameData.canvas.requestFullscreen();
       }
       currentCi = ci;
+      const onResizeFrame = (w, h) => {
+        ctx.canvas.width = w;
+        ctx.canvas.height = h;
+        rgba = new Uint8ClampedArray(w * h * 4);
+        for (let alpha = 3; alpha < rgba.length; alpha += 4) {
+            rgba[alpha] = 255; // opaque
+        }
+      };
+      onResizeFrame(ci.width(), ci.height());
       emulatorsUi.sound.audioNode(ci);
-      ci.events().onFrame((rgba) => {
-        if (ci.frameWidth !== lastWidth || ci.frameHeight !== lastHeight) {
-          ctx.canvas.width = lastWidth = ci.frameWidth;
-          ctx.canvas.height = lastHeight = ci.frameHeight;
+      ci.events().onFrameSize(onResizeFrame);
+      ci.events().onFrame((rgb) => {
+        let index32 = 0;
+        rgbaBuff8 = new Uint8ClampedArray(rgb.buffer);
+        for (let i = 0; i < rgbaBuff8.length; i += 3) {
+            index32 = i / 3 * 4;
+            rgba[index32] = rgbaBuff8[i]; // 255 << 24
+            rgba[index32 + 1] = rgbaBuff8[i + 1]; // 255 << 24
+            rgba[index32 + 2] = rgbaBuff8[i + 2]; // 255 << 24
         }
-        rgbaBuff = new Uint32Array(rgba.buffer);
-        rgbaBuff8 = new Uint8ClampedArray(rgba.buffer);
-        // for (let next = 0; next < rgbaBuff.length; next++) {
-        //     rgbaBuff[next] |= 4278190080; // 255 << 24
-        // }
-        for (let next = 3; next < rgbaBuff8.length; next += 4) {
-            rgbaBuff8[next] = 255; // 255 << 24
-        }
-        ctx.putImageData(new ImageData(rgbaBuff8, ci.frameWidth, ci.frameHeight), 0, 0);
+        ctx.putImageData(new ImageData(rgba, ci.frameWidth, ci.frameHeight), 0, 0);
       });
       currentKeydownListener = (e) => {
         e.preventDefault();
