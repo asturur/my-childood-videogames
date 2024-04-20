@@ -4,6 +4,7 @@
     ['alley_cat', 'CAT.EXE'],
     ['av', 'AV.EXE'],
     ['centipede', 'Ctp.EXE'],
+    ['defender', 'Defender.com'],
     ['arkanoid', 'Arkanoid.com'], // not the exact version, need zx spectrum port // with v7 does not work the keyboard
     ['aaow-cga', 'WAR.EXE'],
     ['missile', 'ABM.EXE'],
@@ -40,6 +41,8 @@
     ['pango', 'pango.exe'],
     ['pool', 'pool.exe'],
     ['sokoban', 'sokoban.exe'],
+    ['rabbit', 'start.bat'],
+    ['testdrive', 'tdcga.exe'],
     // ['msfs', 'boot ms100.ima'], hangs after mode selection
     ['novatron', 'novatron.exe'],
     ['gapper', 'gapper.exe'],
